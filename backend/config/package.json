@@ -1,0 +1,10 @@
+{
+  "name": "restore-cron",
+  "type": "module",
+  "scripts": {
+    "start": "node restore-mongo.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}
