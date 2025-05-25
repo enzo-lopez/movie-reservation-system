@@ -156,7 +156,7 @@ export function CrudTable<T extends {id: string}>({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map(item => (
+            {items.map((item, idx) => (
               <TableRow key={item.id}>
                 {columns.map(column => (
                   <TableCell key={String(column.key)}>
@@ -173,6 +173,7 @@ export function CrudTable<T extends {id: string}>({
                         setFormData(item)
                         setIsAddDialogOpen(true)
                       }}
+                      disabled={title === 'Users' && idx < 4}
                     >
                       Edit
                     </Button>
@@ -180,6 +181,7 @@ export function CrudTable<T extends {id: string}>({
                       variant='destructive'
                       size='sm'
                       onClick={() => onDelete(item.id)}
+                      disabled={title === 'Users' && idx < 4} 
                     >
                       Delete
                     </Button>

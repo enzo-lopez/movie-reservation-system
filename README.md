@@ -1,5 +1,13 @@
 # Movie Reservation System 🎬
 
+**Frontend en producción:**  
+[https://movie-reservation-enzo-lopez.vercel.app/](https://movie-reservation-enzo-lopez.vercel.app/)
+
+**Backend en producción:**  
+[https://movie-reservation-fullstack-production.up.railway.app/](https://movie-reservation-fullstack-production.up.railway.app/)
+
+---
+
 Este proyecto es una implementación completa del sistema de reservas de entradas
 de cine propuesto en el roadmap de backend de
 [roadmap.sh](https://roadmap.sh/projects/movie-reservation-system). Incluye
@@ -49,7 +57,7 @@ El proyecto sigue los lineamientos del
 ## Tecnologías
 
 - **Frontend:** Next.js, React, TailwindCSS
-- **Backend:** Node.js, Express.js
+- **Backend:** Node.js, Express.js, Zod, JWT
 - **Base de datos:** MongoDB (Atlas)
 - **Despliegue:** Vercel (frontend), Railway (backend)
 
@@ -60,11 +68,16 @@ El proyecto sigue los lineamientos del
 ### 1. Clona el repositorio
 
 ```bash
-git clone https://github.com/enzo-lopez/movie-reservation.git
-cd movie-reservation
+git clone https://github.com/enzo-lopez/movie-reservation-system.git
+cd movie-reservation-system
 ```
 
 ### 2. Instala las dependencias
+
+**En la raíz del proyecto**
+```bash
+npm install
+```
 
 **Backend**
 
@@ -123,10 +136,50 @@ cd frontend
 npm run dev
 ```
 
-2. Abre tu navegador y visita `http://localhost:3000` para el frontend y
-   `http://localhost:5000` para el backend.
+**Levanta tanto el Frontend como el Backend**
+```bash
+npm start
+```
+```markdown
+### 2. Instala las dependencias
+
+**En la raíz del proyecto**
+
+```bash
+npm install
+```
+
+Esto instalará las dependencias necesarias para los scripts y herramientas generales del proyecto.
+
+**Backend**
+
+```bash
+cd backend
+npm install
+```
+
+**Frontend**
+
+```bash
+cd ../frontend
+npm install
+```
 
 ---
+
+## Uso
+
+1. Inicia la aplicación desde la **raíz del proyecto**:
+
+```bash
+npm start
+```
+
+Esto levantará tanto el backend como el frontend en modo desarrollo (usando el script definido en el `package.json` de la raíz).
+
+2. Abre tu navegador y visita `http://localhost:3000` para el frontend y  
+   `http://localhost:3001` para el backend (o el puerto que corresponda según tu configuración de los archivos .env).
+
 
 ## API Endpoints
 
