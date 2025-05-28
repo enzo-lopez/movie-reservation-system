@@ -40,7 +40,6 @@ export default function MoviesPage() {
   const [editingMovie, setEditingMovie] = useState<Movie | null>(null)
   const [formData, setFormData] = useState<Partial<Movie>>({})
 
-
   const columns = [
     {key: 'title' as const, label: 'Title'},
     {key: 'genre' as const, label: 'Genre'},
@@ -52,7 +51,9 @@ export default function MoviesPage() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movie`)
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/movie`
+        )
         if (!response.ok) {
           throw new Error('Error fetching movies')
         }
@@ -70,14 +71,17 @@ export default function MoviesPage() {
   const handleAdd = async (movie: Partial<Movie>) => {
     try {
       console.log('Adding movie:', movie)
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movie`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(movie),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/movie`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify(movie),
+        }
+      )
 
       if (!response.ok) {
         throw new Error('Error adding movie')
@@ -87,20 +91,23 @@ export default function MoviesPage() {
       setMovies([...movies, newMovie])
     } catch (err) {
       console.error(err)
-      alert('Error adding movie' )
+      alert('Error adding movie')
     }
   }
 
   const handleEdit = async (id: string, updatedMovie: Partial<Movie>) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movie/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(updatedMovie),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/movie/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify(updatedMovie),
+        }
+      )
 
       if (!response.ok) {
         throw new Error('Error editing movie')
@@ -118,12 +125,15 @@ export default function MoviesPage() {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/movie/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/movie/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      )
 
       if (!response.ok) {
         throw new Error('Error deleting movie')
@@ -158,8 +168,8 @@ export default function MoviesPage() {
   }
 
   return (
-    <div className='space-y-4'>
-      <div className='flex justify-between items-center'>
+    <div className='space-y-4 px-2 py-4 w-full'>
+      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2'>
         <h2 className='text-2xl font-bold'>Movies</h2>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
@@ -176,77 +186,89 @@ export default function MoviesPage() {
             <DialogHeader>
               <DialogTitle>{editingMovie ? 'Edit' : 'Add'} Movie</DialogTitle>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className='space-y-4'>
-              <div>
-                <label className='block text-sm font-medium mb-1'>Title</label>
-                <Input
-                  value={formData.title || ''}
-                  onChange={e =>
-                    setFormData({...formData, title: e.target.value})
-                  }
-                  required
-                />
-              </div>
-              <div>
-                <label className='block text-sm font-medium mb-1'>Genres</label>
-                <div className='flex flex-wrap gap-2'>
-                  {genres.map(genre => (
-                    <Button
-                      key={genre}
-                      variant={
-                        formData.genre?.includes(genre) ? 'default' : 'outline'
-                      }
-                      onClick={() => toggleGenre(genre)}
-                      type='button'
-                    >
-                      {genre}
-                    </Button>
-                  ))}
+            <div className='overflow-x-auto min-w-[320px]'>
+              <form
+                onSubmit={handleSubmit}
+                className='space-y-4 min-w-[320px] max-w-[400px]'
+              >
+                <div>
+                  <label className='block text-sm font-medium mb-1'>
+                    Title
+                  </label>
+                  <Input
+                    value={formData.title || ''}
+                    onChange={e =>
+                      setFormData({...formData, title: e.target.value})
+                    }
+                    required
+                  />
                 </div>
-              </div>
-              <div>
-                <label className='block text-sm font-medium mb-1'>
-                  Duration
-                </label>
-                <Input
-                  value={formData.duration || ''}
-                  onChange={e =>
-                    setFormData({...formData, duration: e.target.value})
-                  }
-                  required
-                />
-              </div>
-              <div>
-                <label className='block text-sm font-medium mb-1'>
-                  Poster URL
-                </label>
-                <Input
-                  value={formData.poster || ''}
-                  onChange={e =>
-                    setFormData({...formData, poster: e.target.value})
-                  }
-                  required
-                />
-              </div>
-              <div>
-                <label className='block text-sm font-medium mb-1'>
-                  Description
-                </label>
-                <Textarea
-                  value={formData.description || ''}
-                  onChange={e =>
-                    setFormData({...formData, description: e.target.value})
-                  }
-                  required
-                />
-              </div>
-              <Button type='submit'>{editingMovie ? 'Update' : 'Add'}</Button>
-            </form>
+                <div>
+                  <label className='block text-sm font-medium mb-1'>
+                    Genres
+                  </label>
+                  <div className='flex flex-wrap gap-2'>
+                    {genres.map(genre => (
+                      <Button
+                        key={genre}
+                        variant={
+                          formData.genre?.includes(genre)
+                            ? 'default'
+                            : 'outline'
+                        }
+                        onClick={() => toggleGenre(genre)}
+                        type='button'
+                        className='text-xs px-2 py-1'
+                      >
+                        {genre}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className='block text-sm font-medium mb-1'>
+                    Duration
+                  </label>
+                  <Input
+                    value={formData.duration || ''}
+                    onChange={e =>
+                      setFormData({...formData, duration: e.target.value})
+                    }
+                    required
+                  />
+                </div>
+                <div>
+                  <label className='block text-sm font-medium mb-1'>
+                    Poster URL
+                  </label>
+                  <Input
+                    value={formData.poster || ''}
+                    onChange={e =>
+                      setFormData({...formData, poster: e.target.value})
+                    }
+                    required
+                  />
+                </div>
+                <div>
+                  <label className='block text-sm font-medium mb-1'>
+                    Description
+                  </label>
+                  <Textarea
+                    value={formData.description || ''}
+                    onChange={e =>
+                      setFormData({...formData, description: e.target.value})
+                    }
+                    required
+                  />
+                </div>
+                <Button type='submit'>{editingMovie ? 'Update' : 'Add'}</Button>
+              </form>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
-      <div className='border rounded-lg'>
-        <table className='w-full'>
+      <div className='border rounded-lg overflow-x-auto'>
+        <table className='w-full min-w-[600px]'>
           <thead>
             <tr>
               {columns.map(column => (
@@ -259,37 +281,40 @@ export default function MoviesPage() {
           </thead>
           <tbody>
             {movies.map(movie => (
-              <tr key={movie._id}>
-                <td className='p-2'>{movie.title}</td>
-                <td className='p-2'>{movie.genre.join(', ')}</td>
+              <tr key={movie._id} className='align-top'>
+                <td className='p-2 break-words max-w-[120px]'>{movie.title}</td>
+                <td className='p-2 break-words max-w-[120px]'>
+                  {movie.genre.join(', ')}
+                </td>
                 <td className='p-2'>{movie.duration}</td>
                 <td className='p-2'>
                   <img
                     src={movie.poster}
                     alt={movie.title}
-                    className='w-16 h-auto'
+                    className='w-16 h-auto rounded'
                   />
                 </td>
                 <td className='p-2'>
-                  <Button
-                    variant='outline'
-                    size='sm'
-                    onClick={() => {
-                      setEditingMovie(movie)
-                      setFormData(movie)
-                      setIsDialogOpen(true)
-                    }}
-                    className='mr-2'
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='sm'
-                    onClick={() => handleDelete(movie._id)}
-                  >
-                    Delete
-                  </Button>
+                  <div className='flex flex-col sm:flex-row gap-2'>
+                    <Button
+                      variant='outline'
+                      size='sm'
+                      onClick={() => {
+                        setEditingMovie(movie)
+                        setFormData(movie)
+                        setIsDialogOpen(true)
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant='destructive'
+                      size='sm'
+                      onClick={() => handleDelete(movie._id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}

@@ -58,7 +58,9 @@ export default function Booking() {
           movie: Array.isArray(movieId) ? movieId[0] : movieId,
         })
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/cinema-room/?${params.toString()}`,
+          `${
+            process.env.NEXT_PUBLIC_BACKEND_URL
+          }/cinema-room/?${params.toString()}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -112,14 +114,17 @@ export default function Booking() {
     }
 
     try {
-       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reservation`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Token JWT
-        },
-        body: JSON.stringify(reservationData),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/reservation`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Token JWT
+          },
+          body: JSON.stringify(reservationData),
+        }
+      )
 
       if (response.ok) {
         const result = await response.json()
@@ -167,32 +172,39 @@ export default function Booking() {
           />
         </div>
       </div>
-      <div className='space-y-4 mb-6'>
-        {rows.map(row => (
-            <div key={row} className='flex justify-center gap-4'>
-            {seats
-              .filter(seat => seat.row === row)
-              .map(seat => (
-              <Button
-                key={`${seat.row}${seat.numberSeat}`}
-                disabled={!seat.isAvaible}
-                variant={
-                selectedSeats.some(
-                  s =>
-                  s.row === seat.row && s.numberSeat === seat.numberSeat
-                )
-                  ? 'default'
-                  : 'outline'
-                }
-                onClick={() => toggleSeat(seat)}
-                className={!seat.isAvaible ? 'text-red-600' : ''}
-              >
-                {seat.row}
-                {seat.numberSeat}
-              </Button>
-              ))}
-            </div>
-        ))}
+      <div className='space-y-4 mb-7'>
+        <div className='overflow-x-auto px-1'>
+          <div className='inline-block w-full'>
+            {rows.map(row => (
+              <div key={row} className='flex w-full gap-1 sm:gap-3 mb-2'>
+                {seats
+                  .filter(seat => seat.row === row)
+                  .map(seat => (
+                    <Button
+                      key={`${seat.row}${seat.numberSeat}`}
+                      disabled={!seat.isAvaible}
+                      variant={
+                        selectedSeats.some(
+                          s =>
+                            s.row === seat.row &&
+                            s.numberSeat === seat.numberSeat
+                        )
+                          ? 'default'
+                          : 'outline'
+                      }
+                      onClick={() => toggleSeat(seat)}
+                      className={`flex-1 min-w-[38px] min-h-[38px] sm:min-w-[48px] sm:min-h-[48px] text-xs sm:text-base ${
+                        !seat.isAvaible ? 'text-red-600' : ''
+                      }`}
+                    >
+                      {seat.row}
+                      {seat.numberSeat}
+                    </Button>
+                  ))}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <div className='mb-4'>
         <h2 className='text-xl font-semibold'>Asientos seleccionados:</h2>

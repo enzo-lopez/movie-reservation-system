@@ -45,9 +45,9 @@ export default function MovieDetails() {
   const handleBooking = () => {
     if (user && movie) {
       const bookingData = {
-        movie: movie.title, 
-        date: format(selectedDate, 'yyyy-MM-dd'), 
-        time: selectedTime, 
+        movie: movie.title,
+        date: format(selectedDate, 'yyyy-MM-dd'),
+        time: selectedTime,
       }
       router.push(
         `/booking/${movie._id}?${new URLSearchParams(bookingData).toString()}`
@@ -70,20 +70,20 @@ export default function MovieDetails() {
   }
 
   return (
-    <div className='flex flex-col md:flex-row gap-8'>
-      <div className='w-full md:w-1/3'>
+    <div className='flex flex-col md:flex-row gap-8 px-2 py-4 max-w-4xl mx-auto'>
+      <div className='w-full md:w-1/3 flex-shrink-0'>
         <img
           src={movie.poster || '/placeholder.svg'}
           alt={movie.title}
-          className='w-full h-auto rounded-lg shadow-md'
+          className='w-full max-w-xs h-auto mx-auto rounded-lg shadow-md'
           onError={e => {
             e.currentTarget.src = `/placeholder.svg?height=346&width=300`
           }}
         />
       </div>
       <div className='w-full md:w-2/3'>
-        <h1 className='text-3xl font-bold mb-4'>{movie.title}</h1>
-        <div className='flex space-x-4 mb-4 text-sm text-gray-600 dark:text-gray-400'>
+        <h1 className='text-2xl md:text-3xl font-bold mb-4'>{movie.title}</h1>
+        <div className='flex flex-wrap gap-2 mb-4 text-sm text-gray-600 dark:text-gray-400'>
           <span>
             {Array.isArray(movie.genre) ? movie.genre.join(', ') : movie.genre}
           </span>
@@ -91,8 +91,10 @@ export default function MovieDetails() {
           <span>{movie.duration}</span>
         </div>
         <p className='mb-6'>{movie.description}</p>
-        <h2 className='text-2xl font-semibold mb-4'>Fechas y Horarios</h2>
-        <div className='flex space-x-2 mb-4 overflow-x-auto'>
+        <h2 className='text-xl md:text-2xl font-semibold mb-4'>
+          Fechas y Horarios
+        </h2>
+        <div className='flex flex-wrap gap-2 mb-4 overflow-x-auto'>
           {dates.map(date => (
             <Button
               key={date.toISOString()}
@@ -102,12 +104,13 @@ export default function MovieDetails() {
                   : 'outline'
               }
               onClick={() => setSelectedDate(date)}
+              className='flex-1 min-w-[80px]'
             >
               {format(date, 'd MMM', {locale: es})}
             </Button>
           ))}
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 gap-4'>
           {(
             movie.showtimes || [
               {id: 1, time: '12:00'},
@@ -119,13 +122,14 @@ export default function MovieDetails() {
               key={showtime.id}
               variant={selectedTime === showtime.time ? 'default' : 'outline'}
               onClick={() => setSelectedTime(showtime.time)}
+              className='w-full'
             >
               {showtime.time}
             </Button>
           ))}
         </div>
         <Button
-          className='mt-6'
+          className='mt-6 w-full md:w-auto'
           onClick={handleBooking}
           disabled={!selectedTime}
         >
