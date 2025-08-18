@@ -3,9 +3,6 @@
 **Frontend en producción:**  
 [https://movie-reservation-enzo-lopez.vercel.app/](https://movie-reservation-enzo-lopez.vercel.app/)
 
-**Backend en producción:**  
-[https://movie-reservation-fullstack-production.up.railway.app/](https://movie-reservation-fullstack-production.up.railway.app/)
-
 ---
 
 Este proyecto es una implementación completa del sistema de reservas de entradas
