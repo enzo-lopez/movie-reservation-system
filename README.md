@@ -19,12 +19,9 @@ backend con **Node.js/Express**, base de datos **MongoDB** y frontend en
 - [Características](#características)
 - [Tecnologías](#tecnologías)
 - [Instalación](#instalación)
-- [Variables de entorno](#variables-de-entorno)
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Uso](#uso)
 - [API Endpoints](#api-endpoints)
-- [Capturas de pantalla](#capturas-de-pantalla)
-- [Autores](#autores)
 - [Créditos](#créditos)
 
 ---
@@ -92,7 +89,7 @@ npm install
 
 ---
 
-## 3. Variables de entorno
+### 3. Variables de entorno
 
 Copia el archivo `.env.example` a `.env` en ambas carpetas, `frontend` y
 `backend`, y configura las variables de entorno necesarias.
@@ -115,52 +112,6 @@ movie-reservation
 
 ---
 
-## Uso
-
-1. Inicia el servidor de desarrollo
-
-**Backend**
-
-```bash
-cd backend
-npm run dev
-```
-
-**Frontend**
-
-```bash
-cd frontend
-npm run dev
-```
-
-**Levanta tanto el Frontend como el Backend**
-```bash
-npm start
-```
-```markdown
-### 2. Instala las dependencias
-
-**En la raíz del proyecto**
-
-```bash
-npm install
-```
-
-Esto instalará las dependencias necesarias para los scripts y herramientas generales del proyecto.
-
-**Backend**
-
-```bash
-cd backend
-npm install
-```
-
-**Frontend**
-
-```bash
-cd ../frontend
-npm install
-```
 
 ---
 
@@ -204,16 +155,6 @@ Reservas
 - `GET /reservation/user`: Listar reservas del usuario
 
 Consulta el archivo `backend/src/routes` para ver todas las rutas disponibles.
-
----
-
-## Capturas de pantalla
-
----
-
-## Autores
-
-- [Enzo Lopez](https://github.com/enzo-lopez)
 
 ---
 
