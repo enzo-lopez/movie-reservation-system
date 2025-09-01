@@ -55,9 +55,12 @@ export default function Home() {
 
   if (loading) {
     return (
-      <p>Cargando películas... </p>
-      <p className="text-gray-600 dark:text-gray-300">
-      Al iniciar por primera vez, el fetch de peliculas demorará aproximadamente 15 segundos</p>
+       <>
+        <p className="text-lg text-gray-600 dark:text-gray-300">Cargando películas...</p>
+        <p className="text-gray-600 dark:text-gray-300">
+          Al iniciar por primera vez, el fetch de peliculas demorará aproximadamente 15 segundos
+        </p>
+      </>
     )
   }
 
